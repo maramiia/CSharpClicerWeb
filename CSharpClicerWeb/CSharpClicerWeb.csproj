@@ -4,16 +4,21 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
     <Folder Include="Controllers\" />
     <Folder Include="Infrastructure Abstraction\" />
     <Folder Include="Infrastructure Implementations\" />
     <Folder Include="Pages\" />
     <Folder Include="UseCases\" />
     <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
   </ItemGroup>
 
 </Project>
