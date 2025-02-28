@@ -1,0 +1,137 @@
+﻿@model IndexViewModel
+
+@section styles {
+    <link href="@Url.Content("~/css/index.css")" rel="stylesheet">
+}
+
+
+<body>
+    <div>
+    <div class="col main-text">
+        <div>
+            <h3>Ты еще слышишь мой голос, Пепел?</h3>
+        </div>
+    </div>
+
+    <div class="col justify-content-center">
+         <button id="clickitem" class="click-item bg-transparent border-0">
+             <img class="w-50" src="~/soul.png" />
+         </button>
+    </div>
+
+    <div class="col main-text main-text1">
+        <div>
+            <h4>Собрано душ: <span id="current_score">@Model.User.CurrentScore</span></h4>
+            <h4>Всего получено душ: <span id="record_score">@Model.User.RecordScore</span></h4>
+            <h4>За одного убитого врага ты получаешь <span id="profit_per_click">@Model.User.ProfitPerClick</span> душ</h4>
+            <h4>Союзники приносят тебе <span id="profit_per_second">@Model.User.ProfitPerSecond</span> душ</h4>
+            <h4>Зашита: <span id="current_protection"> @Model.User.Protection</span></h4>
+            <h4>Сила удара:<span id="current_power"> @Model.User.Power</span></h4>
+        </div>
+    </div>
+    </div>
+    <div class="col">
+        
+        <h3>Бусты</h3>
+        <div class="d-flex">
+            @foreach (var boost in Model.Boosts)
+            {
+                var userBoost = Model.User.UserBoosts.FirstOrDefault(ub => ub.BoostId == boost.Id);
+
+                var price = userBoost?.CurrentPrice ?? boost.Price;
+                var quantity = userBoost?.Quantity ?? 0;
+
+                <button class="boost-button border-0  m-3">
+                    <span class="boost-id" hidden>@boost.Id</span>
+                    <h4>@boost.Title</h4>
+                    <img src="data:image/png;base64, @Convert.ToBase64String(boost.Image)" height="100" />
+                    <h5 class="boost-price-string">Цена: <span class="boost-price">@price</span></h5>
+                    <h5>
+                        Доход: @boost.Profit
+                        @if (boost.IsAuto)
+                        {
+                            <span> в секунду</span>
+                        }
+                    </h5>
+                    <h5>
+                        Количество приобретенных бустов: <span class="boost-quantity">@quantity</span>
+                    </h5>
+                </button>
+            }
+        </div>
+        <h3>Броня</h3>
+        <div class="d-flex">
+            @foreach (var armor in Model.Armors)
+            {
+                var userArmor = Model.User.UserArmors.FirstOrDefault(ub => ub.ArmorId == armor.Id);
+
+                var price = userArmor?.CurrentPrice ?? armor.Price;
+                var quantity = userArmor?.Quantity ?? 0;
+
+                <button class="armor-button border-0  m-3">
+                    <span class="armor-id" hidden>@armor.Id</span>
+                    <h4>@armor.Title</h4>
+                    <img src="data:image/png;base64, @Convert.ToBase64String(armor.Image)" height="100" />
+                    <h5 class="armor-price-string">Цена: <span class="armor-price">@price</span></h5>
+                    <h5>
+                        Защита: @armor.Profit
+                    </h5>
+                    <h5>
+                        Уровень прокачки брони: <span class="armor-quantity">@quantity</span>
+                    </h5>
+                </button>
+            }
+        </div>
+
+        <h3>Оружие</h3>
+        <div class="d-flex">
+            @foreach (var weapon in Model.Weapons)
+            {
+                var userWeapon = Model.User.UserWeapons.FirstOrDefault(ub => ub.WeaponId == weapon.Id);
+
+                var price = userWeapon?.CurrentPrice ?? weapon.Price;
+                var quantity = userWeapon?.Quantity ?? 0;
+                <button class="weapon-button border-0 m-3">
+                    <span class="weapon-id" hidden>@weapon.Id</span>
+                    <h4>@weapon.Title</h4>
+                    <img src="data:image/png;base64, @Convert.ToBase64String(weapon.Image)" height="100" />
+                    <h5 class="weapon-price-string">Цена: <span class="weapon-price">@price</span></h5>
+                     <h5>
+                        Урон: @weapon.Damage
+                    </h5>
+                   <h5>
+                        Уровень оружия: <span class="armor-quantity">@quantity</span>
+                    </h5> 
+                </button>
+            }
+        </div>
+
+            <h3>Боссы</h3>
+            <div class="d-flex">
+                @foreach (var boss in Model.Bosses)
+                {
+                <button class="boss-button border-0  m-3">
+                        <span class="boss-id" hidden>@boss.Id</span>
+                        <h4>@boss.Title</h4>
+                        <img src="data:image/png;base64, @Convert.ToBase64String(boss.Image)" height="100" />
+                        <h5 class="boss-price-string">Здоровье: <span class="boss-price">@boss.Price</span></h5>
+                        <h5>Награда: <span class="boss-reward">@boss.Reward</span></h5>
+                    </button>
+                }
+            </div>
+
+
+
+        <div class="mt-3 back">
+        <button class="btn-cards" onclick="location.href='@Url.Action("NewPage", "Home")'">Посмотреть карточки</button>
+        <form asp-action="Logout" asp-controller="Auth">
+            <input type="submit" class="btn btn-primary logout" value="Выйти из аккаунта" />
+        </form>
+        </div>
+    </div>
+</body>
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/js/index.js"></script>
+}

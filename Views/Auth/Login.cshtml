@@ -1,0 +1,25 @@
+﻿@model AuthViewModel
+
+
+@section styles {
+    <link href="@Url.Content("~/css/auth.css")" rel="stylesheet">
+}
+
+<body>
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <h1>Огонь затухает, и повелители пепла покидают свои троны</h1>
+    <div class="form1 flex-column p-5">
+        <form class="d-flex flex-column align-items-center" asp-action="Login" asp-controller="Auth" method="post">
+            <h4>Войти в аккаунт</h4>
+            <input class="form-control mx-auto m-2" type="text" placeholder="Введите имя пользователя" asp-for="@Model.UserName" maxlength="30" />
+                <input class="form-control mx-auto m-2" type="password" placeholder="Введите пароль" asp-for="@Model.Password" />
+            <input type="submit" class="btn btn-primary mx-auto" value="Войти" />
+            <div asp-validation-summary="All"></div>
+                <a class="mx-auto" asp-action="Register" asp-controller="Auth" style="color: #f1b56e;">Зарегистрироваться</a>
+        </form>
+
+       
+    </div>
+</div>
+</body>
+
